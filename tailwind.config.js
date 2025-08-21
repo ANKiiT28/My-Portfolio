@@ -1,6 +1,5 @@
-import type {Config} from 'tailwindcss';
-
-export default {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   darkMode: ['class'],
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -98,13 +97,38 @@ export default {
             transform: 'translateY(0)',
           },
         },
+        'pulse-slow': {
+          '0%, 100%': { opacity: 1 },
+          '50%': { opacity: 0.8 },
+        },
+        'glow-slow': {
+          '0%, 100%': { boxShadow: '0 0 10px hsl(var(--primary) / 0.1)' },
+          '50%': { boxShadow: '0 0 20px hsl(var(--primary) / 0.3)' },
+        },
+         'pulse-arrows': {
+          '0%, 100%': { transform: 'scale(1)', opacity: '0.7' },
+          '50%': { transform: 'scale(1.1)', opacity: '1' },
+        },
+        'glow-left-arrow': {
+          '0%, 100%': { boxShadow: '0 0 0px hsl(var(--primary))' },
+          '50%': { boxShadow: '0 0 20px 5px hsl(var(--primary) / 0.5)' },
+        },
+        'glow-right-arrow': {
+          '0%, 100%': { boxShadow: '0 0 0px hsl(var(--primary))' },
+          '50%': { boxShadow: '0 0 20px 5px hsl(var(--primary) / 0.5)' },
+        }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in-up': 'fade-in-up 1s ease-out',
+        'pulse-slow': 'pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'glow-slow': 'glow-slow 4s ease-in-out infinite',
+        'pulse-arrows': 'pulse-arrows 7s ease-in-out infinite',
+        'glow-left-arrow': 'glow-left-arrow 0.5s ease-in-out',
+        'glow-right-arrow': 'glow-right-arrow 0.5s ease-in-out',
       },
     },
   },
   plugins: [require('tailwindcss-animate')],
-} satisfies Config;
+};

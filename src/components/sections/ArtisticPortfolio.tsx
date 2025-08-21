@@ -37,10 +37,24 @@ const artworks = [
 ];
 
 export function ArtisticPortfolio() {
+  const svgPattern = `
+    <svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'>
+      <path d='M20 20 L40 40 M40 20 L20 40' stroke='hsl(240 5% 64.9%)' stroke-width='0.5' stroke-opacity='0.1' fill='none' stroke-linecap='round'/>
+      <path d='M60 5 L65 15' stroke='hsl(240 5% 64.9%)' stroke-width='0.5' stroke-opacity='0.1' fill='none' stroke-linecap='round'/>
+      <path d='M5 60 L15 65' stroke='hsl(240 5% 64.9%)' stroke-width='0.5' stroke-opacity='0.1' fill='none' stroke-linecap='round'/>
+      <circle cx='70' cy='70' r='2' stroke='hsl(240 5% 64.9%)' stroke-width='0.5' stroke-opacity='0.1' fill='none'/>
+    </svg>
+  `;
+  const backgroundStyle = {
+    backgroundImage: `url("data:image/svg+xml,${encodeURIComponent(svgPattern)}")`,
+  };
+
   return (
-    <section id="art" className="container space-y-12 py-20 sm:py-32">
+    <section id="art" className="container space-y-12 py-20 sm:py-32" style={backgroundStyle}>
       <div className="text-center">
-        <h2 className="text-3xl font-bold md:text-4xl">Artistic Portfolio</h2>
+        <h2 className="text-3xl font-bold md:text-4xl text-gradient">
+          Artistic Portfolio
+        </h2>
         <p className="mt-4 text-lg text-muted-foreground">
           A showcase of my passion for drawing, sketching, and visual storytelling.
         </p>
@@ -48,7 +62,7 @@ export function ArtisticPortfolio() {
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         {artworks.map((art) => (
           <Link href={art.link} key={art.title} target="_blank" rel="noopener noreferrer">
-            <Card className="flex h-full transform flex-col overflow-hidden rounded-lg shadow-lg transition-transform duration-300 hover:scale-105">
+            <Card className="flex h-full transform flex-col overflow-hidden rounded-lg bg-background/50 shadow-[0_0_15px_hsl(var(--primary)/0.1)] transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/40">
               <CardHeader className="p-0">
                 <div className="relative h-64 w-full">
                   <Image

@@ -30,18 +30,36 @@ const skillCategories = [
 ];
 
 export function Skills() {
+    const svgPattern = `
+    <svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'>
+      <defs>
+        <pattern id='ai-pattern' patternUnits='userSpaceOnUse' width='100' height='100'>
+          <path d='M 10 10 L 40 10 M 60 10 L 90 10 M 10 40 L 40 40 M 60 40 L 90 40 M 10 60 L 40 60 M 60 60 L 90 60 M 10 90 L 40 90 M 60 90 L 90 90 M 10 10 L 10 40 M 10 60 L 10 90 M 40 10 L 40 40 M 40 60 L 40 90 M 60 10 L 60 40 M 60 60 L 60 90 M 90 10 L 90 40 M 90 60 L 90 90' stroke='hsl(240 5% 64.9%)' stroke-width='0.5' stroke-opacity='0.1' fill='none' />
+          <path d='M 50 25 L 75 50 L 50 75 L 25 50 Z' stroke='hsl(240 5% 64.9%)' stroke-width='0.5' stroke-opacity='0.1' fill='none' />
+          <circle cx='50' cy='50' r='5' stroke='hsl(240 5% 64.9%)' stroke-width='0.5' stroke-opacity='0.1' fill='none'/>
+        </pattern>
+      </defs>
+      <rect width='100' height='100' fill='url(#ai-pattern)' />
+    </svg>
+  `;
+  const backgroundStyle = {
+    backgroundImage: `url("data:image/svg+xml,${encodeURIComponent(svgPattern)}")`,
+  };
+
   return (
-    <section id="skills" className="bg-accent">
+    <section id="skills" className="bg-accent" style={backgroundStyle}>
         <div className="container space-y-12 py-20 sm:py-32">
         <div className="text-center">
-            <h2 className="text-3xl font-bold md:text-4xl">Technical & Creative Skills</h2>
+            <h2 className="text-3xl font-bold md:text-4xl">
+                <span className="text-gradient">Technical & Creative Skills</span>
+            </h2>
             <p className="mt-4 text-lg text-muted-foreground">
             A blend of technology and creativity that drives my work.
             </p>
         </div>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {skillCategories.map((category) => (
-            <Card key={category.title} className="transform transition-transform duration-300 hover:scale-105 hover:-rotate-2">
+            <Card key={category.title} className="transform bg-background/50 shadow-[0_0_15px_hsl(var(--primary)/0.1)] transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/40">
                 <CardHeader className="flex flex-row items-center gap-4">
                 {category.icon}
                 <CardTitle>{category.title}</CardTitle>

@@ -8,22 +8,15 @@ import { useRef, useEffect } from 'react';
 
 export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
+  const imageContainerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (heroRef.current) {
-        const { clientX, clientY } = e;
-        const { offsetWidth, offsetHeight } = heroRef.current;
-        const xPos = (clientX / offsetWidth - 0.5) * 40; // Multiplier for background glow intensity
-        const yPos = (clientY / offsetHeight - 0.5) * 40;
-        
-        heroRef.current.style.setProperty('--x', `${xPos}px`);
-        heroRef.current.style.setProperty('--y', `${yPos}px`);
-
         // Radial gradient for background
-        const xPercent = (clientX / window.innerWidth) * 100;
-        const yPercent = (clientY / window.innerHeight) * 100;
+        const xPercent = (e.clientX / window.innerWidth) * 100;
+        const yPercent = (e.clientY / window.innerHeight) * 100;
         heroRef.current.style.background = `radial-gradient(circle at ${xPercent}% ${yPercent}%, hsl(var(--primary) / 0.1), transparent 40%)`;
       }
       
@@ -48,46 +41,47 @@ export function Hero() {
         }
     }
 
-    const heroElement = heroRef.current;
-    if (heroElement) {
-      heroElement.addEventListener('mousemove', handleMouseMove);
-      heroElement.addEventListener('mouseleave', handleMouseLeave);
+    const imageContainer = imageContainerRef.current;
+    if (imageContainer) {
+      imageContainer.addEventListener('mousemove', handleMouseMove);
+      imageContainer.addEventListener('mouseleave', handleMouseLeave);
       return () => {
-        heroElement.removeEventListener('mousemove', handleMouseMove);
-        heroElement.removeEventListener('mouseleave', handleMouseLeave);
+        imageContainer.removeEventListener('mousemove', handleMouseMove);
+        imageContainer.removeEventListener('mouseleave', handleMouseLeave);
       };
     }
   }, []);
 
   return (
     <section ref={heroRef} className="w-full bg-background pt-32 pb-20 relative overflow-hidden transition-all duration-300">
-      <div className="container grid grid-cols-1 items-center gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div className="container grid grid-cols-1 items-center gap-8 md:grid-cols-2 lg:grid-cols-5">
         <div 
-          className="relative flex justify-center animate-fade-in-up lg:col-span-1"
+          ref={imageContainerRef}
+          className="relative flex justify-center animate-fade-in-up lg:col-span-2"
           style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}
         >
           <div 
             ref={imageRef}
             className="relative h-64 w-64 rounded-full shadow-lg md:h-80 md:w-80 transition-transform duration-300 ease-out"
           >
-            <div className="absolute -inset-2 rounded-full bg-primary/30 blur-xl transition-all duration-300"></div>
+            <div className="absolute -inset-2 rounded-full bg-primary/30 blur-xl transition-all duration-300 animate-pulse-slow"></div>
             <Image
               src="/Ankit image.jpg"
               alt="Ankit Kumar"
-              width={300}
-              height={300}
+              width={320}
+              height={320}
               priority
               className="relative h-full w-full rounded-full object-cover"
             />
           </div>
         </div>
-        <div className="space-y-6 text-center md:text-left lg:col-span-2">
+        <div className="space-y-6 text-center md:text-left lg:col-span-3">
           <div className="space-y-2">
              <h1
               className="animate-fade-in-up text-4xl font-bold text-foreground md:text-5xl"
               style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}
             >
-              Creative Technologist & AI Enthusiast
+              <span className="text-gradient">Creative Technologist</span> & AI Enthusiast
             </h1>
             <h2 
               className="animate-fade-in-up text-2xl font-semibold text-primary"
@@ -111,9 +105,9 @@ export function Hero() {
                 <Mail className="mr-2" /> Get in Touch
               </Button>
             </Link>
-            <Link href="https://drive.google.com/file/d/1pEo2WFMvwHLqy41srvO7D0nCcn2VX04O/view?usp=sharing" passHref>
+            <Link href="https://drive.google.com/file/d/1pEo2WFMvwHLqy41srvO7D0nCcn2VX04O/view?usp=sharing" passHref target="_blank">
               <Button variant="outline" size="lg">
-                 <Download className="mr-2" /> Download Resume
+                 <Download className="mr-2" /> Download CV
               </Button>
             </Link>
           </div>

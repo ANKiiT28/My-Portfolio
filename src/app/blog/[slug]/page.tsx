@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Calendar } from 'lucide-react';
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   const posts = getBlogPosts();
   return posts.map((post) => ({
     slug: post.slug,
@@ -32,7 +32,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             src={post.image}
             alt={post.title}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 768px) 100vw, 896px"
             className="object-cover"
             data-ai-hint={post.imageHint}
           />

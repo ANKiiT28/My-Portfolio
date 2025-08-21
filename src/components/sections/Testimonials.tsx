@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Briefcase } from 'lucide-react';
+import { Briefcase, Video } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -21,53 +21,66 @@ const experiences = [
 ];
 
 export function Testimonials() {
+  const [creativeLead, reelsEditor] = experiences;
+
   return (
     <section id="experience" className="bg-accent">
       <div className="container space-y-12 py-20 sm:py-32">
         <div className="text-center">
-          <h2 className="text-3xl font-bold md:text-4xl">Professional Experience</h2>
+          <h2 className="text-3xl font-bold md:text-4xl text-gradient">
+            Professional Experience
+          </h2>
           <p className="mt-4 text-lg text-muted-foreground">
             Where I've applied my skills in creative and technical roles.
           </p>
         </div>
-        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
-            {experiences.map((exp) => (
-              <Card key={exp.role} className="flex h-full flex-col overflow-hidden">
-                {exp.imageUrl ? (
-                    <div className="relative h-56 w-full">
-                        <Image 
-                            src={exp.imageUrl}
-                            alt={`${exp.role} at ${exp.company}`}
-                            fill
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            className="object-cover"
-                            data-ai-hint={exp.imageHint}
-                        />
-                    </div>
-                ) : (
-                  <div className="h-56 w-full bg-secondary"></div>
-                )}
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-12">
+            {/* Creative Lead - Featured Card */}
+            <Card className="flex flex-col overflow-hidden rounded-lg bg-background/50 shadow-[0_0_15px_hsl(var(--primary)/0.1)] transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/40 md:flex-row">
+              <div className="relative h-64 w-full md:h-auto md:w-2/5 lg:w-1/3">
+                  <Image 
+                      src={creativeLead.imageUrl!}
+                      alt={`${creativeLead.role} at ${creativeLead.company}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 40vw"
+                      className="object-cover"
+                      data-ai-hint={creativeLead.imageHint}
+                  />
+              </div>
+              <div className="flex flex-1 flex-col justify-center p-6">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Briefcase className="h-6 w-6 text-primary" />
+                  <CardTitle className="flex items-center gap-4">
+                    <Briefcase className="h-8 w-8 text-primary" />
                     <div>
-                        <h3 className="text-xl font-bold">{exp.role}</h3>
-                        <p className="text-md text-muted-foreground">{exp.company}</p>
+                        <h3 className="text-2xl font-bold">{creativeLead.role}</h3>
+                        <p className="text-lg text-muted-foreground">{creativeLead.company}</p>
                     </div>
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="flex-grow">
-                    <p>{exp.description}</p>
-                    {exp.link && exp.linkLabel && (
+                <CardContent className="flex-grow pt-4">
+                    <p className="text-lg">{creativeLead.description}</p>
+                    {creativeLead.link && creativeLead.linkLabel && (
                        <div className="mt-4">
-                         <Link href={exp.link} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                            {exp.linkLabel}
+                         <Link href={creativeLead.link} target="_blank" rel="noopener noreferrer" className="text-lg text-primary hover:underline">
+                            {creativeLead.linkLabel}
                          </Link>
                        </div>
                     )}
                 </CardContent>
-              </Card>
-            ))}
+              </div>
+            </Card>
+
+            {/* Reels Editor - Secondary Card */}
+            <Card className="transform rounded-lg border-2 border-dashed border-primary/30 bg-background/20 p-8 text-center shadow-lg transition-all duration-300 hover:border-primary/50 hover:bg-background/40">
+                <div className="flex flex-col items-center gap-4">
+                    <Video className="h-10 w-10 text-primary" />
+                    <div>
+                        <h3 className="text-2xl font-bold">{reelsEditor.role}</h3>
+                        <p className="text-lg text-muted-foreground">{reelsEditor.company}</p>
+                    </div>
+                </div>
+                <p className="mt-4 text-lg">{reelsEditor.description}</p>
+            </Card>
         </div>
       </div>
     </section>
