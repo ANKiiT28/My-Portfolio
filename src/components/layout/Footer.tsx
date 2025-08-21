@@ -3,6 +3,8 @@
 import { Github, Linkedin, Mail, Phone, Youtube } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import "./globals.css"
+
 
 export function Footer() {
   const [year, setYear] = useState<number | null>(null);
