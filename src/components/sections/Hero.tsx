@@ -10,29 +10,38 @@ export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  const animationFrameId = useRef<number | null>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (heroRef.current) {
-        // Radial gradient for background
-        const xPercent = (e.clientX / window.innerWidth) * 100;
-        const yPercent = (e.clientY / window.innerHeight) * 100;
-        heroRef.current.style.background = `radial-gradient(circle at ${xPercent}% ${yPercent}%, hsl(var(--primary) / 0.1), transparent 40%)`;
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
       }
-      
-      if (imageRef.current) {
-        const { left, top, width, height } = imageRef.current.getBoundingClientRect();
-        const x = e.clientX - left - width / 2;
-        const y = e.clientY - top - height / 2;
-        
-        const rotateY = (x / (width / 2)) * 15; // Max rotation 15 degrees
-        const rotateX = (-y / (height / 2)) * 15; // Max rotation 15 degrees
 
-        imageRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-      }
+      animationFrameId.current = requestAnimationFrame(() => {
+        if (heroRef.current) {
+          const xPercent = (e.clientX / window.innerWidth) * 100;
+          const yPercent = (e.clientY / window.innerHeight) * 100;
+          heroRef.current.style.background = `radial-gradient(circle at ${xPercent}% ${yPercent}%, hsl(var(--primary) / 0.1), transparent 40%)`;
+        }
+        
+        if (imageRef.current) {
+          const { left, top, width, height } = imageRef.current.getBoundingClientRect();
+          const x = e.clientX - left - width / 2;
+          const y = e.clientY - top - height / 2;
+          
+          const rotateY = (x / (width / 2)) * 15; // Max rotation 15 degrees
+          const rotateX = (-y / (height / 2)) * 15; // Max rotation 15 degrees
+
+          imageRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+        }
+      });
     };
     
     const handleMouseLeave = () => {
+        if (animationFrameId.current) {
+            cancelAnimationFrame(animationFrameId.current);
+        }
         if (imageRef.current) {
             imageRef.current.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
         }
@@ -48,9 +57,20 @@ export function Hero() {
       return () => {
         imageContainer.removeEventListener('mousemove', handleMouseMove);
         imageContainer.removeEventListener('mouseleave', handleMouseLeave);
+        if (animationFrameId.current) {
+          cancelAnimationFrame(animationFrameId.current);
+        }
       };
     }
   }, []);
+
+  const handleScrollToContact = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <section ref={heroRef} className="w-full bg-background pt-32 pb-20 relative overflow-hidden transition-all duration-300">
@@ -100,11 +120,9 @@ export function Hero() {
             className="animate-fade-in-up flex flex-wrap justify-center gap-4 md:justify-start"
             style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}
           >
-            <Link href="#contact" passHref>
-              <Button size="lg">
-                <Mail className="mr-2" /> Get in Touch
-              </Button>
-            </Link>
+            <Button size="lg" onClick={handleScrollToContact}>
+              <Mail className="mr-2" /> Get in Touch
+            </Button>
             <Link href="https://drive.google.com/file/d/1pEo2WFMvwHLqy41srvO7D0nCcn2VX04O/view?usp=sharing" passHref target="_blank">
               <Button variant="outline" size="lg">
                  <Download className="mr-2" /> Download CV

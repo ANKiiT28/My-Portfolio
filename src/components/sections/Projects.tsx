@@ -112,9 +112,26 @@ export function Projects() {
     };
   }, [api, interacting]);
 
+  const svgPattern = `
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'>
+      <defs>
+        <pattern id='project-pattern' patternUnits='userSpaceOnUse' width='80' height='80'>
+          <path d='M0 0 H40 V40 H80' stroke='hsl(240 5% 64.9% / 0.1)' stroke-width='1' fill='none'/>
+          <path d='M40 40 H0 V80 H40' stroke='hsl(240 5% 64.9% / 0.08)' stroke-width='1' fill='none'/>
+        </pattern>
+      </defs>
+      <rect width='80' height='80' fill='hsl(var(--background))' />
+      <rect width='80' height='80' fill='url(#project-pattern)' />
+    </svg>
+  `;
+  const backgroundStyle = {
+    backgroundImage: `url("data:image/svg+xml,${encodeURIComponent(svgPattern)}")`,
+    backgroundSize: 'auto',
+  };
+
 
   return (
-    <section id="projects" className="container space-y-12 py-20 sm:py-32">
+    <section id="projects" className="container space-y-12 py-20 sm:py-32" style={backgroundStyle}>
       <div className="text-center">
         <h2 className="text-3xl font-bold md:text-4xl text-gradient">
           Projects

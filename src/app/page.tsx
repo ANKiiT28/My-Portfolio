@@ -6,6 +6,9 @@ import { Skills } from '@/components/sections/Skills';
 import { ArtisticPortfolio } from '@/components/sections/ArtisticPortfolio';
 import { YoutubeChannel } from '@/components/sections/YoutubeChannel';
 import { Suspense } from 'react';
+import { Certificates } from '@/components/sections/Certificates';
+import { Badges } from '@/components/sections/Badges';
+import { CurrentlyLearning } from '@/components/sections/CurrentlyLearning';
 
 function AnimatedSection({ children }: { children: React.ReactNode }) {
   return (
@@ -24,10 +27,19 @@ export default function Home() {
           <Skills />
         </AnimatedSection>
         <AnimatedSection>
+          <CurrentlyLearning />
+        </AnimatedSection>
+        <AnimatedSection>
           <Projects />
         </AnimatedSection>
         <AnimatedSection>
           <Testimonials />
+        </AnimatedSection>
+        <AnimatedSection>
+          <Certificates />
+        </AnimatedSection>
+        <AnimatedSection>
+          <Badges />
         </AnimatedSection>
         <AnimatedSection>
           <ArtisticPortfolio />

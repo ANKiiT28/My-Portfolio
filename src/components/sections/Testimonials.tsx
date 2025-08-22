@@ -22,9 +22,28 @@ const experiences = [
 
 export function Testimonials() {
   const [creativeLead, reelsEditor] = experiences;
+  
+  const svgPattern = `
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+      <defs>
+        <pattern id='experience-pattern' patternUnits='userSpaceOnUse' width='100' height='100'>
+          <circle cx='25' cy='25' r='1.5' fill='hsl(240 5% 64.9% / 0.1)' />
+          <path d='M 25 25 L 75 75' stroke='hsl(240 5% 64.9% / 0.1)' stroke-width='1' />
+          <circle cx='75' cy='75' r='1.5' fill='hsl(240 5% 64.9% / 0.1)' />
+        </pattern>
+      </defs>
+      <rect width='100' height='100' fill='hsl(var(--background))' />
+      <rect width='100' height='100' fill='url(#experience-pattern)' />
+    </svg>
+  `;
+  const backgroundStyle = {
+    backgroundImage: `url("data:image/svg+xml,${encodeURIComponent(svgPattern)}")`,
+    backgroundSize: 'cover',
+  };
+
 
   return (
-    <section id="experience" className="bg-accent">
+    <section id="experience" className="bg-background" style={backgroundStyle}>
       <div className="container space-y-12 py-20 sm:py-32">
         <div className="text-center">
           <h2 className="text-3xl font-bold md:text-4xl text-gradient">
@@ -58,7 +77,7 @@ export function Testimonials() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-grow pt-4">
-                    <p className="text-lg">{creativeLead.description}</p>
+                    <p className="text-lg text-muted-foreground">{creativeLead.description}</p>
                     {creativeLead.link && creativeLead.linkLabel && (
                        <div className="mt-4">
                          <Link href={creativeLead.link} target="_blank" rel="noopener noreferrer" className="text-lg text-primary hover:underline">
@@ -79,7 +98,7 @@ export function Testimonials() {
                         <p className="text-lg text-muted-foreground">{reelsEditor.company}</p>
                     </div>
                 </div>
-                <p className="mt-4 text-lg">{reelsEditor.description}</p>
+                <p className="mt-4 text-lg text-muted-foreground">{reelsEditor.description}</p>
             </Card>
         </div>
       </div>

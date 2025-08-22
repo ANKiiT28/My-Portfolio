@@ -37,12 +37,16 @@ const artworks = [
 ];
 
 export function ArtisticPortfolio() {
-  const svgPattern = `
-    <svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'>
-      <path d='M20 20 L40 40 M40 20 L20 40' stroke='hsl(240 5% 64.9%)' stroke-width='0.5' stroke-opacity='0.1' fill='none' stroke-linecap='round'/>
-      <path d='M60 5 L65 15' stroke='hsl(240 5% 64.9%)' stroke-width='0.5' stroke-opacity='0.1' fill='none' stroke-linecap='round'/>
-      <path d='M5 60 L15 65' stroke='hsl(240 5% 64.9%)' stroke-width='0.5' stroke-opacity='0.1' fill='none' stroke-linecap='round'/>
-      <circle cx='70' cy='70' r='2' stroke='hsl(240 5% 64.9%)' stroke-width='0.5' stroke-opacity='0.1' fill='none'/>
+    const svgPattern = `
+    <svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'>
+      <defs>
+        <pattern id='ai-pattern' patternUnits='userSpaceOnUse' width='100' height='100'>
+          <path d='M 10 10 L 40 10 M 60 10 L 90 10 M 10 40 L 40 40 M 60 40 L 90 40 M 10 60 L 40 60 M 60 60 L 90 60 M 10 90 L 40 90 M 60 90 L 90 90 M 10 10 L 10 40 M 10 60 L 10 90 M 40 10 L 40 40 M 40 60 L 40 90 M 60 10 L 60 40 M 60 60 L 60 90 M 90 10 L 90 40 M 90 60 L 90 90' stroke='hsl(240 5% 64.9%)' stroke-width='0.5' stroke-opacity='0.1' fill='none' />
+          <path d='M 50 25 L 75 50 L 50 75 L 25 50 Z' stroke='hsl(240 5% 64.9%)' stroke-width='0.5' stroke-opacity='0.1' fill='none' />
+          <circle cx='50' cy='50' r='5' stroke='hsl(240 5% 64.9%)' stroke-width='0.5' stroke-opacity='0.1' fill='none'/>
+        </pattern>
+      </defs>
+      <rect width='100' height='100' fill='url(#ai-pattern)' />
     </svg>
   `;
   const backgroundStyle = {
@@ -50,40 +54,42 @@ export function ArtisticPortfolio() {
   };
 
   return (
-    <section id="art" className="container space-y-12 py-20 sm:py-32" style={backgroundStyle}>
-      <div className="text-center">
-        <h2 className="text-3xl font-bold md:text-4xl text-gradient">
-          Artistic Portfolio
-        </h2>
-        <p className="mt-4 text-lg text-muted-foreground">
-          A showcase of my passion for drawing, sketching, and visual storytelling.
-        </p>
-      </div>
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {artworks.map((art) => (
-          <Link href={art.link} key={art.title} target="_blank" rel="noopener noreferrer">
-            <Card className="flex h-full transform flex-col overflow-hidden rounded-lg bg-background/50 shadow-[0_0_15px_hsl(var(--primary)/0.1)] transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/40">
-              <CardHeader className="p-0">
-                <div className="relative h-64 w-full">
-                  <Image
-                    src={art.imageUrl}
-                    alt={art.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="rounded-t-lg object-cover"
-                    data-ai-hint={art.imageHint}
-                  />
-                </div>
-              </CardHeader>
-              <CardContent className="p-4">
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <Paintbrush className="h-5 w-5 text-primary" />
-                  {art.title}
-                </CardTitle>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
+    <section id="art" className="bg-accent" style={backgroundStyle}>
+      <div className="container space-y-12 py-20 sm:py-32">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold md:text-4xl text-gradient">
+            Artistic Portfolio
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            A showcase of my passion for drawing, sketching, and visual storytelling.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {artworks.map((art) => (
+            <Link href={art.link} key={art.title} target="_blank" rel="noopener noreferrer">
+              <Card className="flex h-full transform flex-col overflow-hidden rounded-lg bg-background/50 shadow-[0_0_15px_hsl(var(--primary)/0.1)] transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/40">
+                <CardHeader className="p-0">
+                  <div className="relative h-64 w-full">
+                    <Image
+                      src={art.imageUrl}
+                      alt={art.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="rounded-t-lg object-cover"
+                      data-ai-hint={art.imageHint}
+                    />
+                  </div>
+                </CardHeader>
+                <CardContent className="p-4">
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Paintbrush className="h-5 w-5 text-primary" />
+                    {art.title}
+                  </CardTitle>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );

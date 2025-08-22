@@ -108,15 +108,16 @@ export function YoutubeChannel() {
     <section id="youtube" className="bg-accent">
       <div className="container space-y-12 py-20 sm:py-32">
         <div className="text-center">
-          <Link
-            href="https://www.youtube.com/@AnkiitMaurya"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className="flex items-center justify-center gap-2 text-3xl font-bold transition-colors hover:text-primary md:text-4xl text-gradient">
-              <Youtube className="h-8 w-8 text-red-600" /> My YouTube Channel
+            <h2 className="text-3xl font-bold md:text-4xl text-gradient">
+                <Link
+                    href="https://www.youtube.com/@AnkiitMaurya"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 transition-colors hover:text-primary"
+                >
+                    <Youtube className="h-8 w-8 text-red-600" /> My YouTube Channel
+                </Link>
             </h2>
-          </Link>
           <p className="mt-4 text-lg text-muted-foreground">
             This channel is my canvas for storytelling, cinematography, and
             video production. Explore my creative work beyond the code.

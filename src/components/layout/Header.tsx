@@ -1,6 +1,8 @@
+
 "use client";
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -10,15 +12,32 @@ const navLinks = [
   { href: '/#skills', label: 'Skills' },
   { href: '/#projects', label: 'Projects' },
   { href: '/#experience', label: 'Experience' },
-  { href: '/#art', label: 'Art' },
+  { href: '/blog', label: 'Blog' },
   { href: '/#contact', label: 'Contact' },
 ];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const handleScrollToContact = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (pathname !== '/') {
+      // Button will be a link, so we don't need to do anything here for other pages.
+      return;
+    }
+    e.preventDefault();
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const ContactButton = () => (
+    <Button onClick={handleScrollToContact}>Contact Me</Button>
+  );
 
   return (
-    <header className="fixed top-0 z-50 w-full bg-background/80 backdrop-blur-sm transition-all">
+    <header className="fixed top-0 z-50 w-full border-b border-transparent bg-background/80 backdrop-blur-sm transition-all group-data-[scrolled=true]:border-border">
       <div className="container flex h-16 items-center">
         <Link href="/" className="mr-6 flex items-center space-x-2">
            <Code className="h-6 w-6 text-primary" />
@@ -36,9 +55,13 @@ export function Header() {
           ))}
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-4">
-          <a href="mailto:akm135212@gmail.com">
-            <Button>Contact Me</Button>
-          </a>
+          {pathname === '/' ? (
+            <ContactButton />
+          ) : (
+            <Link href="/#contact" passHref>
+              <ContactButton />
+            </Link>
+          )}
           <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon" className="md:hidden">
